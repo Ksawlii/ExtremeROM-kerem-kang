@@ -252,6 +252,14 @@ GENERATE_UPDATER_SCRIPT()
     [ "$NO_COMPRESSION" = "false" ] && BROTLI_EXTENSION=".br"
     local SCRIPT_FILE="$TMP_DIR/META-INF/com/google/android/updater-script"
     local PARTITION_COUNT=0
+    
+    HAS_ODM=false
+    HAS_DTBO=false
+    HAS_DTB=false
+    HAS_BOOT=false
+    HAS_PRISM=false
+    HAS_OPTICS=false
+    
     local HAS_UP_PARAM=false
     local HAS_BOOT=false
     local HAS_DTB=false
@@ -270,7 +278,7 @@ GENERATE_UPDATER_SCRIPT()
     local HAS_PRISM=false
     local HAS_OPTICS=false
     local HAS_POST_INSTALL=false
-
+    
     [ -f "$TMP_DIR/up_param.bin" ] && HAS_UP_PARAM=true
     [ -f "$TMP_DIR/boot.img" ] && HAS_BOOT=true
     [ -f "$TMP_DIR/dtb.img" ] && HAS_DTB=true
