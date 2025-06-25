@@ -208,7 +208,7 @@ EXTRACT_ALL()
     mkdir -p "$FW_DIR/${MODEL}_${REGION}"
     EXTRACT_KERNEL_BINARIES
     EXTRACT_OS_PARTITIONS
-    EXTRACT_AVB_BINARIES
+    #EXTRACT_AVB_BINARIES
 
     cp --preserve=all "$ODIN_DIR/${MODEL}_${REGION}/.downloaded" "$FW_DIR/${MODEL}_${REGION}/.extracted"
 
