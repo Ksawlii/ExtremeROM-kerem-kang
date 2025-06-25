@@ -602,27 +602,6 @@ if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
     GENERATE_OP_LIST
 fi
 
-while read -r i; do
-    PARTITION="$(basename "$i" | sed "s/.img//g")"
-
-    [[ "$PARTITION" == "unsparse_super_empty" ]] && continue
-
-    if [ -f "$TMP_DIR/$PARTITION.new.dat" ] || [ -f "$TMP_DIR/$PARTITION.new.dat.br" ]; then
-        rm -f "$TMP_DIR/$PARTITION.new.dat" \
-            && rm -f "$TMP_DIR/$PARTITION.new.dat.br" \
-            && rm -f "$TMP_DIR/$PARTITION.patch.dat" \
-            && rm -f "$TMP_DIR/$PARTITION.transfer.list"
-    fi
-
-    echo "Converting $PARTITION.img to $PARTITION.new.dat"
-    img2sdat -o "$TMP_DIR" "$i" > /dev/null 2>&1 \
-        && rm "$i"
-    if [ "$NO_COMPRESSION" = "false" ]; then
-        echo "Compressing $PARTITION.new.dat"
-        brotli --quality=6 --output="$TMP_DIR/$PARTITION.new.dat.br" "$TMP_DIR/$PARTITION.new.dat" \
-            && rm "$TMP_DIR/$PARTITION.new.dat"
-    fi
-done <<< "$(find "$TMP_DIR" -mindepth 1 -maxdepth 1 -type f -name "*.img")"
 
 while read -r i; do
     IMG="$(basename "$i")"
