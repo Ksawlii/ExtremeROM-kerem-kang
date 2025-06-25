@@ -198,25 +198,6 @@ EXTRACT_OS_PARTITIONS()
     cd "$PDR"
 }
 
-EXTRACT_AVB_BINARIES()
-{
-    local PDR
-    PDR="$(pwd)"
-
-    echo "- Extracting AVB binaries..."
-    cd "$FW_DIR/${MODEL}_${REGION}"
-    if [ ! -f "vbmeta.img" ] && tar tf "$BL_TAR" "vbmeta.img.lz4" &>/dev/null; then
-        echo "Extracting vbmeta.img"
-        tar xf "$BL_TAR" "vbmeta.img.lz4" && lz4 -d -q --rm "vbmeta.img.lz4" "vbmeta.img"
-    fi
-    if [ ! -f "vbmeta_patched.img" ]; then
-        echo "Generating vbmeta_patched.img"
-        cp --preserve=all "vbmeta.img" "vbmeta_patched.img"
-        printf "\x03" | dd of="vbmeta_patched.img" bs=1 seek=123 count=1 conv=notrunc &> /dev/null
-    fi
-
-    cd "$PDR"
-}
 
 EXTRACT_ALL()
 {
